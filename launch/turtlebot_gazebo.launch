@@ -1,0 +1,10 @@
+<launch>
+
+    <arg name="load_map" default="true" doc="Whether to launch the Glennan second floor map. ([true|false])" />
+    <arg name="world_file" default="$(find glennan_second_floor)/worlds/glennan_world.world" doc="Full path to a world file.  The default is the Glennan second floor world." />
+
+    <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch" pass_all_args="true" />
+
+    <include if="$(arg load_map)" file="$(find glennan_second_floor)/launch/glennan_second_floor_map.launch" pass_all_args="true" />
+
+</launch>

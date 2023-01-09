@@ -1,0 +1,23 @@
+<launch>
+
+    <arg name="robot" default="$(find cwru_ecse_376)/resources/robots/turtlebot.yaml" doc="Full path to an STDR robot YAML file." />
+    <arg name="stdr_gui" default="true" doc="Whether to start the STDR GUI [true|false]" />
+    <arg name="stdr_server" default="true" doc="Whether to star the STDR server [true|false]" />
+    <arg name="map_home" default="15.25 34.25 0" doc="Home of the robot in x, y, and z. [15.25 34.25 0]" />
+    <arg name="world_home" default="0 0 0 0 0 0" doc="World to Map transformation [0 0 0 0 0 0]" />
+
+    <arg name="map" default="$(find glennan_second_floor)/configs/glennan_second_floor_model_map.yaml" />
+
+	<include file="$(find stdr_robot)/launch/robot_manager.launch" />
+	
+	<node if="$(arg stdr_server)" type="stdr_server_node" pkg="stdr_server" name="stdr_server" output="screen" args="$(arg map)"/>
+
+	<node pkg="tf" type="static_transform_publisher" name="world2map" args="$(arg world_home) world map 100" />
+	
+	<include if="$(arg stdr_gui)" file="$(find stdr_gui)/launch/stdr_gui.launch"/>
+	
+    <arg name="stdr_robot_arg_string" value="add $(arg robot) $(arg map_home)" />
+	<node unless="$(eval arg('robot') == '')" pkg="stdr_robot" type="robot_handler" name="$(anon robot_spawn)" args="$(arg stdr_robot_arg_string)" />
+
+
+</launch>
