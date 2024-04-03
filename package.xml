@@ -62,7 +62,6 @@
   <exec_depend>stdr_robot</exec_depend>
   <exec_depend>stdr_server</exec_depend>
   <exec_depend>stdr_resources</exec_depend>
-  <exec_depend>glennan_second_floor</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
